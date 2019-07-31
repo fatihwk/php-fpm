@@ -1,0 +1,9 @@
+[submodule "opt/screw-plus"]
+	path = opt/screw-plus
+	url = https://github.com/fatihwk/screw-plus.git
+[submodule "opt/libfastcommon"]
+	path = opt/libfastcommon
+	url = https://github.com/happyfish100/libfastcommon.git
+[submodule "opt/fastdfs"]
+	path = opt/fastdfs
+	url = https://github.com/happyfish100/fastdfs.git

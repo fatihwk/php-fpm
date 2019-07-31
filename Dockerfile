@@ -25,7 +25,6 @@ RUN apt-get update && apt-get upgrade -y \
     libzip-dev \
     memcached \
     wget \
-    git \
     unzip \
     zlib1g-dev \
     && docker-php-ext-configure gd \
@@ -60,10 +59,14 @@ RUN apt-get update && apt-get upgrade -y \
     && pecl install memcached && docker-php-ext-enable memcached \
     && pecl install mongodb && docker-php-ext-enable mongodb \
     && pecl install redis && docker-php-ext-enable redis \
-    && git clone https://github.com/fatihwk/screw-plus.git /tmp/screw-plus \
-    && cd /tmp/screw-plus && phpize && ./configure && make  \
-    && /bin/cp /tmp/screw-plus/modules/php_screw_plus.so `php-config --extension-dir`/screw_plus.so \
+    && cd `pwd`/opt/screw-plus && phpize && ./configure && make  \
+    && /bin/cp `pwd`/opt/screw-plus/modules/php_screw_plus.so `php-config --extension-dir`/screw_plus.so \
     && docker-php-ext-enable screw_plus   \
+    && CURDIR=`pwd` && cd ${CURDIR}/opt/libfastcommon/ &&  ./make.sh && ./make.sh install  \
+    && cd ${CURDIR}/opt/fastdfs  && ./make.sh && ./make.sh install  \
+    && cd ${CURDIR}/opt/fastdfs/php_client/ && phpize && ./configure  && make \
+    && /bin/cp `pwd`/opt/fastdfs/php_client/modules/fastdfs_client.so `php-config --extension-dir`/fastdfs.so  \
+    && docker-php-ext-enable fastdfs  \
     && yes '' | pecl install imagick && docker-php-ext-enable imagick \
     && docker-php-source delete \
     && apt-get remove -y g++ wget \
